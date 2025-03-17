@@ -10,13 +10,19 @@ namespace MyFreeNet
     public class UserToken
     {
         public Socket socket;
+        MessageResolver _messageResolver;
 
         public void SetEventArgs(SocketAsyncEventArgs receiveArgs, SocketAsyncEventArgs sendArgs)
         {
-            receiveArgs.BytesTransferred
+            
         }
 
         public void OnReceive(byte[] buffer, int offset, int bytesTransferred)
+        {
+            _messageResolver.OnReceive(buffer, offset, bytesTransferred, _OnMessageCompleted);
+        }
+
+        void _OnMessageCompleted(ArraySegment<byte> buffer)
         {
 
         }
