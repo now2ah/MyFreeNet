@@ -80,7 +80,9 @@ namespace MyFreeNet
 
         public void ClearBuffer()
         {
-
+            Array.Clear(_messageBuffer, 0, _messageBuffer.Length);
+            _currentPosition = 0;
+            _messageSize = 0;
         }
 
         bool _ReadUntil(byte[] buffer, ref int sourcePosition)
@@ -110,9 +112,13 @@ namespace MyFreeNet
 
         int _GetTotalMessageSize()
         {
-            return 0;
+            Type type = Defines.HEADRSIZE.GetType();
+            if (type.Equals(typeof(Int16)))
+            {
+                return BitConverter.ToInt16(_messageBuffer, 0);
+            }
+
+            return BitConverter.ToInt32(_messageBuffer, 0);
         }
-
-
     }
 }
